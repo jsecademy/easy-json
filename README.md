@@ -28,7 +28,7 @@ The operations that are available to you.
 * `.getJSON()` gets JSOn data from disk
 * `.path = "path/name"` set the property of the parent path
 * `.path` returns the set path
-* `.name= "config.json"` sets the name of file to write to disk
+* `.name = "config.json"` sets the name of file to write to disk
 * `.name` gets the name of the file
 
 *This module was made possible thanks to [LearnMEAN.com](https://www.learnmean.com/)*
