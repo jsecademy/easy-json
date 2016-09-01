@@ -7,6 +7,7 @@
     "test": "tests"
   },
   "scripts": {},
+  "main": "src/easy-json"
   "keywords": [
     "Fast",
     "and",
