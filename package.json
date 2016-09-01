@@ -3,15 +3,10 @@
   "version": "1.0.2",
   "description": "Read and write out JSON to the File System.",
   "private": false,
-  "main": "index.js",
   "directories": {
     "test": "tests"
   },
-  "scripts": {
-    "postinstall": "node node_modules/typings/dist/bin.js install",
-    "build": "node ./config/build.js",
-    "postbuild": "node node_modules/mocha/bin/mocha ./build/tests/*.js"
-  },
+  "scripts": {},
   "keywords": [
     "Fast",
     "and",
