@@ -99,5 +99,4 @@ var EasyJSON = (function () {
     };
     return EasyJSON;
 }());
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = EasyJSON;
+module.exports = EasyJSON;
