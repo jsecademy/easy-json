@@ -7,7 +7,8 @@ This can be helpful for a series of use cases.
 2. Custom configurations
 3. Bypass node.js caching of reading in JSON
 
-Getting started with this module
+**Getting started with this module**
+---
 
 ```javascript
 import {EasyJSON} from 'easy-json';
