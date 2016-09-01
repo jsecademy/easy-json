@@ -7,7 +7,7 @@ describe('Singleton', function () {
     var jay;
     before(function (done) {
         var destination = root.path + "/config";
-        jay = easy_json_1.EasyJSON.getInstance('config.json', destination);
+        jay = easy_json_1.default.getInstance('config.json', destination);
         done();
     });
     it('Single singleton is received', function () {
@@ -16,7 +16,7 @@ describe('Singleton', function () {
     it('Fails on double instantiation', function () {
         assert.throws(function () {
             try {
-                var myJSON = new easy_json_1.EasyJSON();
+                var myJSON = new easy_json_1.default();
             }
             catch (e) {
                 throw e;
@@ -28,7 +28,7 @@ describe('Setting getter sand setters for path value', function () {
     var jay;
     var destination = root.path + "/config";
     before(function (done) {
-        jay = easy_json_1.EasyJSON.getInstance('config.json', destination);
+        jay = easy_json_1.default.getInstance('config.json', destination);
         done();
     });
     it('Path values match on instantiation', function () {
@@ -47,7 +47,7 @@ describe('Saving to disk', function () {
     var jay;
     before(function (done) {
         var destination = root.path + "/config";
-        jay = easy_json_1.EasyJSON.getInstance('config.json', destination);
+        jay = easy_json_1.default.getInstance('config.json', destination);
         done();
     });
     it('Successfully saved data to disk', function () {
@@ -91,7 +91,7 @@ describe('Reading from disk', function () {
         }];
     before(function (done) {
         var destination = root.path + "/config";
-        jay = easy_json_1.EasyJSON.getInstance('config.json', destination);
+        jay = easy_json_1.default.getInstance('config.json', destination);
         jay.saveJSON(users);
         done();
     });

@@ -24,17 +24,8 @@ var EasyJSON = (function () {
         if (!pathExist) {
             fs.mkdirSync(this._path); // Create path if it does not exist
         }
-        try {
-            fs.accessSync(fileName, fs.F_OK);
-            pathExist = true;
-        }
-        catch (e) {
-            throw e;
-        }
-        if (!pathExist) {
-            // This will override any files if they exist
-            fs.writeFileSync(fileName, data, 'utf8'); // Will throw error if it fails
-        }
+        // This will override any files if they exist
+        fs.writeFileSync(fileName, data, 'utf8'); // Will throw error if it fails
     };
     // Get data from Disk
     EasyJSON.prototype.getJSON = function () {
@@ -108,4 +99,5 @@ var EasyJSON = (function () {
     };
     return EasyJSON;
 }());
-exports.EasyJSON = EasyJSON;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.default = EasyJSON;
