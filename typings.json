@@ -1,0 +1,12 @@
+{
+  "resolution": {
+    "main": "typings/"
+  },
+  "globalDependencies": {
+    "app-root-path": "registry:dt/app-root-path#1.2.1+20160719232327",
+    "chai": "registry:dt/chai#3.4.0+20160601211834",
+    "core-js": "registry:dt/core-js#0.0.0+20160725163759",
+    "mocha": "registry:dt/mocha#2.2.5+20160720003353",
+    "node": "registry:dt/node#6.0.0+20160830141956"
+  }
+}
