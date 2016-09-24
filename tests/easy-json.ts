@@ -1,140 +1,147 @@
 import * as chai from 'chai';
-import EasyJSON = require("../src/easy-json");
 import * as root from 'app-root-path';
+import {
+    EasyJSON
+} from '../src/easy-json';
 
 const assert = chai.assert;
 
-describe('Singleton', function () {
-    let jay:EasyJSON;
-	before(function (done) {
+describe('Singleton', () => {
+    let easy: EasyJSON;
+    before((done) => {
         const destination = `${root.path}/config`;
-        jay = EasyJSON.getInstance('config.json', destination);
+        easy = EasyJSON.getInstance('config.json', destination);
         done();
-	});
-	it('Single singleton is received', function () {
-        assert.isObject(jay);
-	});
+    });
+    it('Is a single instance being returned?', () => {
+        assert.isObject(easy);
+    });
 
-	it('Fails on double instantiation', function () {
-        assert.throws(() => {
-            try{
+    it('Fails on double instantiations', () => {
+        assert.throw(() => {
+            try {
                 let myJSON = new EasyJSON();
-            }catch(e){
+            } catch (e) {
                 throw e;
             }
-        }, Error, "Yikes you can\'t create this object! try EasyJSON.getInstance()");
-	});
+        }, Error, 'Yikes you can\'t create this object! try EasyJSON.getInstance()');
+    });
 });
 
-describe('Setting getter sand setters for path value', function () {
-    let jay:EasyJSON;
+describe('Settings the getter and setter for the path value', () => {
+    let easy: EasyJSON;
     const destination = `${root.path}/config`;
-	before(function (done) {
-        jay = EasyJSON.getInstance('config.json', destination);
+    before((done) => {
+        easy = EasyJSON.getInstance('config.json', destination);
         done();
-	});
+    });
 
-	it('Path values match on instantiation', function () {
-        assert.equal(jay.path, destination, '== path values match up');
-	});
+    it('Path value match on instance', () => {
+        assert.equal(easy.path, destination, '=== path values match up');
+    });
 
-	it('Getter is working', function () {
-        assert.equal(jay.path, destination, '== path values match up');
-	});
-
-    it('Path values match on set', function () {
+    it('Path values match on set', () => {
         const path = `${root.path}/custom-scripts`;
-        jay.path = path;
-        assert.equal(jay.path, path, '== custom set path values match up');
-	});
+        easy.path = path;
+        assert.equal(easy.path, path, '=== custom path values match up');
+    });
+
 });
 
-describe('Saving to disk', function () {
-    let jay:EasyJSON;
-	before(function (done) {
-        const destination = `${root.path}/config`;
-        jay = EasyJSON.getInstance('config.json', destination);
+describe('Settings the getter and setter for the name value', () => {
+    let easy: EasyJSON;
+    const destination = `${root.path}/config`;
+    before((done) => {
+        easy = EasyJSON.getInstance('config.json', destination);
         done();
-	});
-	it('Successfully saved data to disk', function () {
-        const data = [{
-            name: "Brandy",
-            age: 22
-        }, {
-            name: "Ferguson",
-            age: 32
-        }];
-        assert.isUndefined(jay.saveJSON(data));
-	});
+    });
 
-	it('Fails on an invalid destination', function () {
+    it('Name value match on instance', () => {
+        assert.equal(easy.name, 'config.json', '=== name values match up');
+    });
+
+    it('Name value match on set', () => {
+        const name = `custom-scripts.json`;
+        easy.name = name;
+        assert.equal(easy.name, name, '=== custom name values match up');
+    });
+});
+
+describe('Saving to Disk', () => {
+    let easy: EasyJSON;
+    before((done) => {
+        const destination = `${root.path}/config`;
+        easy = EasyJSON.getInstance('config.json', destination);
+        done();
+    });
+    it('Save to Disk', () => {
         const data = [{
-            name: "Brandy",
+            name: "brandy",
             age: 22
         }, {
-            name: "Ferguson",
+            name: "ferguson",
             age: 32
         }];
-        jay.name = `${root.path}/config/automated`;
-        jay.path = 'configurations.json';
+        assert.isUndefined(easy.saveJSON(data));
+    });
+    it('Fails on invalid destination', () => {
+        const data = [{
+            name: "brandy",
+            age: 22
+        }, {
+            name: "ferguson",
+            age: 32
+        }];
+        easy.name = `${root.path}/config/blank`;
+        easy.path = 'configurations.json';
         assert.throws(() => {
-            try{
-                jay.saveJSON(data);
-            }catch(e){
-                throw e;
+            try {
+                easy.saveJSON(data);
+            } catch (err) {
+                throw err;
             }
         }, Error);
-	});
+    });
 });
 
-describe('Reading from disk', function () {
-    let jay:EasyJSON;
-    const users = [{
-        name: "Brandy",
+describe('Reading from Disk', () => {
+    let easy: EasyJSON;
+    const data = [{
+        name: "brandy",
         age: 22
     }, {
-        name: "Ferguson",
+        name: "ferguson",
         age: 32
     }];
-	before(function (done) {
+
+    before((done) => {
         const destination = `${root.path}/config`;
-        jay = EasyJSON.getInstance('config.json', destination);
-        jay.saveJSON(users);
+        easy = EasyJSON.getInstance('config.json', destination);
+        easy.saveJSON(data);
         done();
-	});
+    });
 
-	it('Successfully received a promise', function () {
-       const promise = jay.getJSON();
-       assert.isDefined(promise);
-       assert.typeOf(promise, 'Promise');
-	});
+    it('Promise received', () => {
+        const promise = easy.getJSON();
+        assert.isDefined(promise);
+        assert.typeOf(promise, 'Promise');
+    });
 
-	it('Successfully read in file', function () {
-       const promise = jay.getJSON();
-       return promise.then((data) => {
-           assert.deepEqual(data, users, 'data is not equal to each other');
-       });
-	});
+    it('Read from Disk', () => {
+        const promise = easy.getJSON();
+        return promise.then((raw) => {
+            assert.deepEqual(raw, data, 'Data is not the same!');
+        });
+    });
 
-	it('Reading from an undefined path', function () {
-        jay.name = undefined;
-        jay.path = undefined;
-        const promise = jay.getJSON();
-        return promise.catch((error)=>{
+    it('Fails on invalid destination', () => {
+        easy.path = undefined;
+        easy.name = undefined;
+        const promise = easy.getJSON();
+        return promise.catch((error) => {
             assert.throws(() => {
                 throw error;
             }, Error);
         });
-	});
-
-	it('Reading from an invalid path', function () {
-        jay.name = `${root.path}/config/automated`;
-        jay.path = 'configurations.json';
-        const promise = jay.getJSON();
-        return promise.catch((error)=>{
-            assert.throws(() => {
-                throw error;
-            }, Error);
-        });
-	});
+    });
 });

@@ -3,7 +3,7 @@
  */
 import * as fs from "fs";
 
-class EasyJSON{
+class EasyJSON {
     private static instance: EasyJSON;
     private _path: string;
     private _name: string;
@@ -27,7 +27,7 @@ class EasyJSON{
             throw e;
         }
 
-        if(!pathExist){
+        if (!pathExist) {
             fs.mkdirSync(this._path); // Create path if it does not exist
         }
 
@@ -36,22 +36,22 @@ class EasyJSON{
     }
 
     // Get data from Disk
-    public getJSON(){
+    public getJSON() {
         const promise = new Promise((resolve, reject) => {
-            if(EasyJSON.isset(this._path) && EasyJSON.isset(this._name)){
+            if (EasyJSON.isset(this._path) && EasyJSON.isset(this._name)) {
                 let fileName = `${this._path}/${this._name}`;
                 if (fs.lstatSync(fileName).isFile()) {
-                        fs.readFile(fileName, 'utf8', (err, data) => {
-                            if (err){
-                                    reject(err);
-                            }else{
-                                resolve(JSON.parse(data));
-                            }
-                        });
+                    fs.readFile(fileName, 'utf8', (err, data) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            resolve(JSON.parse(data));
+                        }
+                    });
                 } else {
-                     reject(new Error('Invalid File! Path cant be resolved'));
+                    reject(new Error('Invalid File! Path cant be resolved'));
                 }
-            }else{
+            } else {
                 // Path and Name are Required
                 reject(new Error('Path and Name are Required'));
             }
@@ -60,7 +60,7 @@ class EasyJSON{
     }
 
     // Set project Path
-    public set path(path:string) {
+    public set path(path: string) {
         this._path = path;
     }
 
@@ -76,29 +76,31 @@ class EasyJSON{
 
     // Get file name
     public get name() {
-        return this.name;
+        return this._name;
     }
 
-    public static getInstance(name?:string, location?:string): EasyJSON {
+    public static getInstance(name ? : string, location ? : string): EasyJSON {
         if (EasyJSON.instance === undefined) {
             EasyJSON.instance = new EasyJSON();
         }
-        if(EasyJSON.isset(name)){
-                EasyJSON.instance._name = name;
+        if (EasyJSON.isset(name)) {
+            EasyJSON.instance._name = name;
         }
-        if(EasyJSON.isset(name)){
-                EasyJSON.instance._path = location;
+        if (EasyJSON.isset(name)) {
+            EasyJSON.instance._path = location;
         }
         return EasyJSON.instance;
     }
 
-    private static isset(value):boolean{
+    private static isset(value): boolean {
         let set = false;
-        if(value !== undefined || value !== null){
+        if (value !== undefined || value !== null) {
             set = true;
         }
         return set;
     }
 }
 
-export = EasyJSON;
+export {
+    EasyJSON
+};
