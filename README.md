@@ -1,4 +1,4 @@
-### Easy-JSON | Crazy fast file system package to work with JSON
+### Easy-JSON | Crazy fast file system JSON reader and writer 
 This package will help you create and read in JSON files into your application. 
 
 This can be helpful for a series of use cases. 
