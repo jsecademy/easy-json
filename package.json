@@ -1,6 +1,6 @@
 {
   "name": "easy-json",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Read and write out JSON to the File System.",
   "private": false,
   "directories": {
